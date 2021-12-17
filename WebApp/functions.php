@@ -122,7 +122,7 @@ class design
             
             echo "<script type='text/javascript'>";
                 echo "var PayeeList = " . json_encode($PayeeArrayDesc) . ";";
-                echo "$('#Payee').typeahead({hint: true, highlight: true, minLength: 0},{name: 'PayeeList', limit:15, displayKey: 'value', source: substringMatcher(PayeeList)});";
+                echo "$('#Payee').typeahead({hint: true, highlight: true, minLength: 0},{name: 'PayeeList', limit:".(costant::show_full_list()? "100": "15").", displayKey: 'value', source: substringMatcher(PayeeList)});";
                 if ($TrPayeeDefault != "")
                     {echo "document.getElementById('Payee').value='${TrPayeeDefault}'";}
             echo "</script>";
@@ -143,7 +143,7 @@ class design
             
             echo "<script type='text/javascript'>";
                 echo "var CategoryList = " . json_encode($CategoryArrayDesc) . ";";
-                echo "$('#Category').typeahead({hint: true, highlight: true, minLength: 0},{name: 'CategoryList', limit:15, displayKey: 'value', source: substringMatcher(CategoryList)});";
+                echo "$('#Category').typeahead({hint: true, highlight: true, minLength: 0},{name: 'CategoryList', limit:".(costant::show_full_list()? "100": "15").", displayKey: 'value',source: substringMatcher(CategoryList)});";
                 if ($TrCategoryDefault != "")
                     {echo "document.getElementById('Category').value='${TrCategoryDefault}';";}
             echo "</script>";
@@ -1297,6 +1297,15 @@ class costant
             {
                 global $disable_payee;
                 if ($disable_payee == "True")
+                    {return True;}
+                else
+                    {return False;}
+            }
+        
+        public static function show_full_list ()
+            {
+                global $show_full_list;
+                if ($show_full_list == "True")
                     {return True;}
                 else
                     {return False;}

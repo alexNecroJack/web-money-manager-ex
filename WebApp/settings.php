@@ -17,7 +17,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
             {$username = "";}
         
         $default_account = $_POST["Default_Account"];
-        $default_account = $_POST["Default_Account"];
+        
+        if (isset ($_POST["Set_Show_full_list"]))
+            {$show_full_list = $_POST["Set_Show_full_list"];}
+            else
+            {$show_full_list = "False";}
         
         if (isset ($_POST["Set_Disable_payee"]))
             {$disable_payee = $_POST["Set_Disable_payee"];}
@@ -46,6 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
                 "disable_authentication"=> $disable_authentication,
                 "user_username"         => $username,
                 "user_password"         => $password,
+                "show_full_list"        => $show_full_list,
                 "disable_payee"         => $disable_payee,
                 "disable_category"      => $disable_category,
                 "defaultaccountname"    => $default_account,
@@ -85,6 +90,7 @@ include_once '_header.php';
                 $const_username = costant::login_username();
                 $const_password = costant::login_password();
                 $const_desktop_guid = costant::desktop_guid();
+                $const_show_full_list = costant::show_full_list();
                 $const_disable_payee = costant::disable_payee();
                 $const_disable_category = costant::disable_category();
                 $const_defaultaccountname = costant::transaction_default_account();
@@ -111,6 +117,11 @@ include_once '_header.php';
                 
                 //SECTION NEW TRANSACTIONS
                 design::section_legened("New transactions");
+                    if ($const_show_full_list == True)
+                        {design::settings_checkbox("Set_Show_full_list",True,"Show full list of choices on focus");}
+                        else
+                        {design::settings_checkbox("Set_Show_full_list",False,"Show full list of choices on focus");}
+                        
                     if ($const_disable_payee == True)
                         {design::settings_checkbox("Set_Disable_payee",True,"Disable payees management");}
                         else
